@@ -1,0 +1,51 @@
+import easygui as easy
+#######################################
+#MadLib assignment
+#Alexander Sampson
+#March 12 2024
+#
+#focus: easyGUI, F-string formatting, lists
+#
+#step 1: Create a pimple MadLib that takes info from user to create a short responce (10-15)
+#Step 2: Create a MadLib, which asks for multiple values from the user, and uses ransom input to create the final responce.
+#######################################
+
+#These two lists are were my questions are stored and the second list is were the answers are added
+questions = ["Enter a Name","Enter a Name","Enter a Name","Enter a Job","Enter a '-ing' Verb","Enter a '-ing' Verb","Enter a '-ing' Verb","Enter a '-ing' Verb","Enter a Color","Enter a City","Enter a Food","Enter a Time","Enter a School Name"]
+answers = []
+#This funtion will ask the questions in order and put the aswers in the aswer list in order
+def user_answer():
+    answers.clear()
+    questions_count = len(questions)
+    for x in range (questions_count):
+        msg = f"{questions[x]}?"
+        title = 'the secrets out'
+        pet = easy.enterbox(msg,title)
+        answers.append(pet)
+#This is the story. It draws the answers from the answers from the list using index values    
+def story():
+    story = f"Hi! My name is {answers[0]} and I have a secret to share with you. I am a normal kid by day and a {answers[3]} by night. Only you and my best"\
+    f"friend {answers[1]} know my secret. You may be wondering how this happened? Well one night I was {answers[4]} at home then BOOM! All the lights whent out and"\
+    f" {answers[2]} showed up. In a booming voice he/she said that because my favorite color is {answers[8]} I was chosen to be a {answers[3]}. "\
+    f"My mission is to save the people of {answers[9]} by doing my favorite things {answers[5]}, {answers[6]} and {answers[7]}. That may sound easy but it"\
+    f" is no walk in the park. It is hard work. My weakness is eating {answers[10]}. They are gross! :( Keep it away from me! I save the world"\
+    f" every night but when I wake up at {answers[11]} I pretend to be a regular kid at {answers[12]}."
+    easy.msgbox(story)
+#This funtion will alow you to repeat the process one or end the program. It will not print the intro message a second time
+def repeat():
+    repeat_msg = "Do you wish to do it again? "
+    quit_no = ["yes","No"]
+    repeat = easy.choicebox(repeat_msg,"The Secrets out",quit_no)
+    if repeat == "yes":
+        user_answer()
+        story()
+    else:
+        quit(0)
+#The intro message is at the begining to inroduce what the program will do
+intro_msg = "Welcome to the MadLibs python program. This story is called 'the secrets out'. "\
+"I will ask you Questions and your answers will be put into a srory. For best result use obscure thing."
+intro = easy.msgbox(intro_msg,'the secrets out')
+#This is the part that calls the funtions to get answers, print the story and ask if the user wishe to have a second ho at the madlib
+user_answer()
+story()
+repeat()
