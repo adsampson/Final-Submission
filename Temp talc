@@ -1,0 +1,88 @@
+#These are the lists I use to store data
+days_of_week = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "saturday"]
+week_temp_c = []
+week_temp_f = []
+week_temp_k = []
+
+#Ask's the user for the tempurature and the units then passes the numbers forward to temp_conversion 
+def record_temp():
+    question_qount = len(days_of_week)
+    for x in range (question_qount):
+        daily_temp = int(input(f"What's the tempurature on {days_of_week[x]}? "))
+        daily_unit = input("What is the unit for the temperature? ")
+        temp_conversion(daily_temp, daily_unit)#this passes the funtion on so they can be used
+
+#This takes the temperature in c in and calculates the other two units k and f
+def c_to_other(daily_temp):
+    temp_c = daily_temp
+    temp_f = round(((daily_temp*(9/5))+32) , 3)
+    temp_k = round((daily_temp+273.15), 3)
+    week_temp_c.append(temp_c)
+    week_temp_f.append(temp_f)
+    week_temp_k.append(temp_k)
+    return (temp_k, temp_c, temp_f) 
+
+#This takes the temperature in f in and calculates the other two units c and k
+def f_to_other(daily_temp):
+    temp_f = daily_temp
+    temp_c = round((daily_temp-32)*(5/9) , 3)
+    temp_k = round(((((daily_temp-32)*5)/5)+273.15) , 3)
+    week_temp_c.append(temp_c)
+    week_temp_f.append(temp_f)
+    week_temp_k.append(temp_k)
+    return (temp_k, temp_c, temp_f)
+
+#This takes the temperature in k in and calculates the other two units c and f
+def k_to_other(daily_temp):
+    temp_k = daily_temp
+    temp_f = round(((((daily_temp-273.15)*9)/5)+32), 3)
+    temp_c = round((daily_temp-273.15) , 3)
+    week_temp_c.append(temp_c)
+    week_temp_f.append(temp_f)
+    week_temp_k.append(temp_k)
+    return (temp_k, temp_c, temp_f)
+
+#This funtion decides where temperature goes, k_to_other,c_to_other or f_to_other 
+def temp_conversion(daily_temp , daily_unit):
+    if daily_unit.lower() == "c":
+        cur_temp = c_to_other(daily_temp)
+    elif daily_unit.lower() == "f":
+        cur_temp = f_to_other(daily_temp)
+    elif daily_unit.lower() == "k":
+        cur_temp = k_to_other(daily_temp)
+
+#Calculates the average then prints them
+def temp_average():
+    av_c = round(sum(week_temp_c)/len(week_temp_c),2)
+    av_f = round(sum(week_temp_f)/len(week_temp_f),2)
+    av_k = round(sum(week_temp_k)/len(week_temp_k),2)
+    print(f"The average temperature for the week, in celcius, is {av_c} degrees celcius.")
+    print(f"The average temperature for the week, in ferinhight, is {av_f} degrees ferinheight.")
+    print(f"The average temperature for the week, in kalvin, is {av_k} degrees kalvin.")
+
+#Sorts the lists so I can findout what the min and max values are
+def min_max():
+    week_temp_c.sort()
+    week_temp_f.sort()
+    week_temp_k.sort()
+    print(f"The coolest day of the week is {week_temp_c[0]} degrees celcius and the hotest day was {week_temp_c[6]} degrees celcius.")
+    print(f"The coolest day of the week is {week_temp_f[0]} degrees ferinhight and the hotest day was {week_temp_f[6]} degrees ferinhight.")
+    print(f"The coolest day of the week is {week_temp_k[0]} degrees kalvin and the hotest day was {week_temp_k[6]} degrees kalvin.")
+
+#This will allow the user to do more then one week's worth of calculations if desired
+def repeat():
+    yes_no = input("Do you wish to calculate another week? ")
+    if yes_no.lower() == "yes":
+        record_temp()
+        temp_average()
+        min_max()
+        repeat()
+    else:
+        exit()
+
+#program loop
+print("Welcome to the temperature calculator. Here you can use celsius, ferinheight or kalvin (please use C, F or K).")
+record_temp()
+temp_average()
+min_max()
+repeat()
