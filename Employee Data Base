@@ -1,0 +1,58 @@
+###########################
+#Employee Dictionary
+#Alexander David Sampson
+#2/21/2024
+#Task: Complete functions with the provided info
+###########################
+import easygui as easy
+
+#this will show a usefull intro message to explaim how to use this code
+easy.msgbox("Welcome to Alex's employee databae. Use the shell control the code. Your options are add_person() to add employees. job_location_pairs() to print who does what where. possible_raise() to see who worked long enough to get a raise.","Eployee database")
+
+#this is the list of dict that data will be strored
+employee = [{"name":"Mr. Slater", "job":"teacher", "location": "CCHS", "start date": 2018},]
+
+#Global variable for title, it looks better to me
+title = "Eployee database"
+
+#This funtion will ask for the name, job, location of work and start date of the employee and add it to 'employee' list
+def add_person():
+    yes_no = ["Yes", "No"]
+    repeat = easy.choicebox("Do you wish to add a new emloyee?",title, yes_no)
+    if repeat == "Yes":
+        name = easy.enterbox("Enter the name of the employee.",title)
+        job = easy.enterbox("Enter the job of the employee.",title)
+        loc = easy.enterbox("Enter the location the employee works at.",title)
+        start_date = easy.enterbox("Enter the start year of the employee.",title)
+        while not start_date.isdigit():
+            easy.msgbox("Thats not a number.",title)
+            start_date = easy.enterbox("Enter the start year of the employee.",title)
+        employee.append({'name':name,'job':job,'location':loc, 'start date':start_date})
+        add_person()
+    else:
+        pass
+
+#This funtion will print what a person does what there job is and were they work 
+def job_location_pairs():
+    all_pairs = ""
+    for person in employee:
+        job_pair = f"{person['name']} is a {person['job']} and they work at {person['location']}."
+        all_pairs += job_pair
+        all_pairs += "\n"
+    easy.msgbox(all_pairs,title)    
+
+#This funtion will campare an employee's start date to 2016.
+#If they started before 2016 it will say that they can get a raise. 
+def possible_raise():
+    all_raises = ""
+    for person in employee:
+        date = int(person["start date"])
+        if date < 2016:
+            s_date = f"{person['name']} has meet the employment length requirement to get a raise."
+            all_raises += s_date
+            all_raises += "\n"
+        else:
+            st_date = f"{person['name']} has not meet the employment length requirement to get a raise."
+            all_raises += st_date
+            all_raises += "\n"
+    easy.msgbox(all_raises,title)
